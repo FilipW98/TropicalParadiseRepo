@@ -1,0 +1,752 @@
+@import './colors';
+@import './components';
+@import './mixins';
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+html {
+	font-size: 62.5%;
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.6rem;
+}
+
+
+// ===========
+// NAV
+// ===========
+.burger-btn {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	padding: 1em;
+	background: none;
+	border: 1px solid transparent;
+	cursor: pointer;
+	z-index: 1000;
+
+	&:focus {
+		outline: none;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 8px;
+	}
+
+	&:hover {
+		.burger-btn__bars::before,
+		.burger-btn__bars::after {
+			width: 100%;
+		}
+	}
+
+	&__box {
+		position: relative;
+		width: 40px;
+		height: 30px;
+	}
+
+	&__bars,
+	&__bars::after,
+	&__bars::before {
+		@include burgerBtn;
+	}
+
+	&__bars {
+		width: 100%;
+
+		&::after {
+			top: 13px;
+			width: 60%;
+		}
+
+		&::before {
+			top: 27px;
+			width: 30%;
+			transition-delay: 0.1s;
+		}
+	}
+}
+
+.black-bars-color,
+.black-bars-color::after,
+.black-bars-color::before {
+	background-color: $dark;
+}
+// ===========
+// NAVIGATION
+// ===========
+.nav {
+	position: fixed;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100%;
+	transform: translateX(100%);
+	background-image: $blue-gradient-solid;
+	z-index: 100;
+	transition: cubic-bezier(0.65, 0.05, 0.36, 1) 0.5s;
+
+	&--active {
+		transform: translateX(0);
+	}
+
+	&__item {
+		position: relative;
+		display: block;
+		margin: 0.5em 0;
+		padding: 0.3em 1em;
+		font-size: 3rem;
+		text-transform: uppercase;
+		color: $pure-white;
+		text-decoration: none;
+
+		&::before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 3px;
+			background-color: $pure-white;
+			height: 100%;
+			content: '';
+			transform: scaleY(0);
+			transition: transform 0.3s;
+		}
+
+		&:hover::before {
+			transform: scaleY(1);
+		}
+	}
+}
+
+@keyframes navItemsAnimation {
+	from {
+		transform: translateX(200%);
+	}
+
+	to {
+		transform: translateX(0);
+	}
+}
+
+.nav-items-animation {
+	animation: navItemsAnimation 1s;
+}
+// ===========
+// HEADER
+// ===========
+.header {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 2em;
+	height: 75vh;
+	text-align: center;
+	color: $pure-white;
+	@include heroImages('../img/tropical-small.jpg');
+	background-attachment: scroll;
+
+	&__heading {
+		font-family: 'Dancing Script', cursive;
+		font-size: 4.8rem;
+		font-weight: 300;
+	}
+
+	&__text {
+		font-size: 1.4rem;
+	}
+
+	&__btn {
+		background-color: $pure-white;
+		top: 1.2em;
+		padding: 0.8em 1.6em;
+		font-size: 1.4rem;
+		color: $dark;
+		text-transform: uppercase;
+		text-decoration: none;
+		cursor: pointer;
+		border-radius: 8px;
+		border: none;
+
+		&::before {
+			background-color: $light-white;
+		}
+	}
+}
+
+// =======================
+//  MAIN
+// ===========
+// SECTION
+// =======================
+.dreams {
+	&__box {
+		display: flex;
+		flex-direction: column;
+		margin: 2em 0;
+	}
+	&__img {
+		width: 100%;
+		margin-bottom: 1em;
+	}
+	&__title {
+		margin-bottom: 0.5em;
+	}
+
+	&__text {
+		font-size: 1.4rem;
+	}
+}
+// ===========
+// HERO-IMG
+// ===========
+.hero-img {
+	position: relative;
+	padding: 10em 2em;
+	text-align: center;
+	overflow: hidden;
+	color: $pure-white;
+	@include heroImages('../img/polynesia-small.jpg');
+
+	&__title {
+		font-family: 'Dancing Script', cursive;
+		font-size: 4.8rem;
+		margin-bottom: 0.5em;
+	}
+	&__text {
+		padding: 1em 0;
+	}
+}
+// ===========
+// ISLANDS
+// ===========
+
+.islands {
+	&__card {
+		position: relative;
+		margin: 1em 0;
+		text-align: center;
+		height: 450px;
+		color: $pure-white;
+		perspective: 1000;
+
+		&:hover {
+			.islands__card-img {
+				transform: rotateY(-180deg);
+				opacity: 0;
+			}
+			.islands__card-info {
+				transform: rotateY(0);
+				opacity: 1;
+			}
+		}
+
+		&-img {
+			padding: 2em;
+			height: 100%;
+			border-radius: 8px;
+			background-size: cover;
+			transition: transform 1s, opacity 1s;
+
+			&--first {
+				background-image: $light-blue-gradient, url(../img/water-gdd8551ec5_640.jpg);
+			}
+			&--second {
+				background-image: $blue-gradient, url(../img/2.jpg);
+			}
+			&--third {
+				background-image: $purple-gradient, url(../img/3.jpg);
+			}
+
+			&-title {
+				font-family: 'Dancing Script', cursive;
+				font-size: 2.8rem;
+			}
+
+			&-info {
+				position: absolute;
+				bottom: 30px;
+				right: 30px;
+				font-size: 1.8rem;
+
+				i {
+					margin-right: 0.3em;
+				}
+			}
+		}
+
+		&-info {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-image: $light-blue-gradient-solid;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			border-radius: 8px;
+			opacity: 0;
+			transform: rotateY(180deg);
+			transition: transform 1s, opacity 1s;
+
+			&-title {
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				top: 1.2em;
+				font-family: 'Dancing Script', cursive;
+				font-size: 2.8rem;
+			}
+
+			&-list {
+				margin: 0 auto;
+				width: 70%;
+				list-style: none;
+
+				&-item {
+					padding: 1em;
+					border-bottom: 1px solid $light-white;
+					font-size: 1.4rem;
+					&:last-child {
+						border-bottom: none;
+					}
+				}
+			}
+
+			&-btn {
+				margin: 0 auto;
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				bottom: 2em;
+				width: 70%;
+				padding: 1em;
+				border-radius: 8px;
+				background-color: $green-color;
+				border: none;
+				cursor: pointer;
+
+				&::before {
+					background-color: $green-color-hover;
+				}
+			}
+		}
+	}
+}
+// =======================
+// OFFERS
+// =======================
+
+.offers {
+	position: relative;
+
+	@include heroImages('../img/maldives-small.jpg');
+	overflow: hidden;
+
+	h2 {
+		color: $pure-white;
+	}
+
+	&__option {
+		background-color: $pure-white;
+		margin: 2em 0.3em;
+		overflow: hidden;
+		&-img {
+			width: 100%;
+			transition: transform 0.3s;
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+		&-info {
+			padding: 2em;
+			background-color: $pure-white;
+			z-index: 10;
+		}
+		&-heading {
+			margin-bottom: 0.5em;
+			font-size: 2.4rem;
+			font-weight: 300;
+		}
+		&-text {
+			margin-bottom: 0.5em;
+			font-size: 1.3rem;
+			color: $dark;
+		}
+		&-btn {
+			margin-top: 0.5em;
+			padding: 0.8em;
+			width: 100%;
+			background-color: $main-color;
+			border: none;
+			color: $pure-white;
+			border-radius: 8px;
+			cursor: pointer;
+			&::before {
+				background-color: $secondary-color;
+			}
+		}
+	}
+}
+// =======================
+// REVIEWS
+// =======================
+
+@media (max-width: 767px) {
+	.reviews.section-padding {
+		padding: 6em 0;
+	}
+}
+
+.reviews {
+	&__box {
+		position: relative;
+		margin: 2em;
+		padding: 2em;
+		box-shadow: 3px 3px 10px rgba(46, 46, 46, 0.18);
+		transition: transform.3s;
+		&:hover {
+			transform: scale(0.95);
+		}
+	}
+	&__box-img {
+		position: absolute;
+		top: 8%;
+		left: 75%;
+		transform: translate(-50%, -50%);
+		img {
+			width: 80px;
+			height: 80px;
+			object-fit: cover;
+			border-radius: 50%;
+		}
+	}
+	&__box-quote {
+		font-size: 2.5rem;
+		color: $main-color;
+		margin-bottom: 0.5em;
+	}
+	&__box-text {
+		margin-bottom: 0.6em;
+		font-size: 1.4rem;
+		color: $dark;
+	}
+}
+
+// =======================
+// CONTACT
+// =======================
+
+.contact {
+	position: relative;
+	background-color: $light-white;
+	overflow: hidden;
+
+	.white-block-left {
+		background-color: $dark;
+	}
+
+	&__form,
+	&__form-top {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__form-label {
+		margin-bottom: 0.5em;
+		text-transform: uppercase;
+	}
+
+	&__form-input {
+		@include contactForm;
+	}
+
+	&__form-textarea {
+		@include contactForm;
+		resize: vertical;
+		max-height: 400px;
+		min-height: 50px;
+	}
+
+	&__form-btn {
+		align-self: flex-end;
+		width: 100%;
+		padding: 1em;
+		max-width: 300px;
+		background-color: $main-color;
+		border: none;
+		border-radius: 8px;
+		color: $pure-white;
+		cursor: pointer;
+	}
+}
+
+// =======================
+// FOOTER
+// =======================
+
+.footer {
+	background-color: $dark;
+	color: $pure-white;
+
+	.wrapper {
+		padding: 6em 2em 2em;
+	}
+
+	&__box {
+		font-size: 1.4rem;
+	}
+
+	&__box-title {
+		margin-bottom: 1em;
+		font-size: 3rem;
+		text-transform: uppercase;
+	}
+
+	&__box-desktop {
+		display: none;
+	}
+	&__box-social {
+		margin: 2em 0em 1em;
+	}
+	&__box-link {
+		padding: 0 0.3em;
+		font-size: 3.6rem;
+		color: $pure-white;
+		text-decoration: none;
+		transition: color 0.3s;
+		&:hover {
+			color: $main-color;
+		}
+		&:first-child {
+			padding-left: 0em;
+		}
+	}
+	&__bottom-text {
+		padding: 2em;
+		text-align: center;
+	}
+}
+
+// =======================
+// MEDIA
+// =======================
+
+@media (min-width: 576px) {
+	.dreams {
+		&__box {
+			flex-direction: row;
+			justify-content: space-between;
+
+			&-text {
+				width: 55%;
+
+				&--right {
+					text-align: right;
+				}
+			}
+			&-img {
+				width: 40%;
+				&--right {
+					order: 1;
+				}
+			}
+		}
+		&__img {
+			margin-bottom: 0;
+			max-height: 300px;
+		}
+	}
+
+	.offers {
+		&__option {
+			display: flex;
+			margin: 2em 0;
+			width: 100%;
+
+			&-img {
+				width: 50%;
+				height: auto;
+				&--right {
+					order: 1;
+				}
+			}
+			&-info {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+			&-heading {
+				font-size: 2.7rem;
+				margin-bottom: 0.5em;
+			}
+			&-text {
+				font-size: 1.5rem;
+			}
+			&-btn {
+				padding: 1em;
+			}
+		}
+	}
+}
+
+@media (min-width: 768px) {
+	.white-block {
+		height: 50px;
+		width: 45%;
+	}
+
+	.header {
+		&__heading {
+			font-size: 6.6rem;
+		}
+		&__text {
+			font-size: 2.2rem;
+		}
+		&__btn {
+			font-size: 1.6rem;
+		}
+	}
+	.dreams {
+		&__text {
+			font-size: 1.8rem;
+		}
+	}
+
+	.hero-img {
+		padding: 30rem 2em;
+
+		hr {
+			margin: 0 auto;
+			width: 70%;
+		}
+	}
+
+	.islands {
+		&__cards {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+
+		&__card {
+			margin: 1em;
+			width: 45%;
+		}
+	}
+
+	.footer {
+		&__boxes {
+			display: flex;
+			justify-content: space-between;
+		}
+		&__box {
+			margin: 0em 2em;
+			width: 25%;
+			text-decoration: none;
+
+			&:first-child {
+				width: 50%;
+			}
+		}
+
+		&__box-desktop {
+			display: block;
+		}
+		&__box-title {
+			font-size: 2.4rem;
+		}
+		&__box-list {
+			list-style: none;
+		}
+		&__box-list-item {
+			margin-bottom: 1em;
+			a {
+				color: $pure-white;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	.burger-btn {
+		top: 50px;
+		right: 50px;
+	}
+
+	.header {
+		&__heading {
+			font-size: 9rem;
+		}
+		background-image: linear-gradient(45deg, rgba(20, 105, 241, 0.75), rgba(42, 10, 184, 0.75)),
+			url('../img/tropical-big.jpg');
+	}
+
+	.nav {
+		&__item {
+			font-size: 4.8rem;
+		}
+	}
+
+	.dreams {
+		&__box {
+			margin: 5em 0;
+			&-text {
+				display: flex;
+				flex-direction: column;
+				justify-content: end;
+				margin-bottom: 2.5em;
+			}
+		}
+		&__title {
+			font-size: 3.6rem;
+		}
+		&__text {
+			font-size: 2.2rem;
+		}
+	}
+	.hero-img {
+		padding: 30rem 2em;
+		@include heroImages('../img/polynesia-big.jpg');
+
+		&__title {
+			font-size: 7.2rem;
+		}
+
+		hr {
+			width: 60%;
+			max-width: 900px;
+		}
+	}
+	.offers {
+		background-image: $blue-gradient, url('../img/maldives-big.jpg');
+		&__option {
+			&-img {
+				object-fit: cover;
+				height: 320px;
+			}
+		}
+	}
+}
+
+@media (min-width: 1100px) {
+	.islands {
+		&__card {
+			margin: 1em;
+			width: 30%;
+		}
+	}
+}
